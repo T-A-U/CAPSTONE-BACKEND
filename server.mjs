@@ -6,17 +6,23 @@ import mongoose from 'mongoose';
 import Game from './models/games.mjs';
 // import Fruits from 
 // TODO: Change all "Fruits" to "Game" in this file (and comment out the old server.mjs, and make a copy, put above the comment and, then edit the copy)
-import fruits from './utilities/data.js';
+//import fruits from './utilities/data.js';
 import games from './utilities/data.js';
+import cors from "cors"
+import userRoutes from './routes/api/users.js'
+import authRoutes from './routes/api/auth.js'
 
 //Configurations
 dotenv.config();
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 5000;
 await mongoose.connect(process.env.MONGO_URI);
 
 //Middleware
 app.use(express.json());
+app.use(cors())
+app.use('/api/users',userRoutes );
+app.use('/api/auth',authRoutes );
 
 //Routes
 // //Seed Routes
@@ -45,6 +51,11 @@ app.get('/', async (req, res) => {
     res.status(500).json({ msg: 'Server Error' });
   }
 });
+// app.post('/login', function (req,res){
+//   var post = req.body
+  
+// })
+
 
 //Create new game
 app.post('/', async (req, res) => {

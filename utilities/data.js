@@ -1,12 +1,14 @@
-const fruits = [
-  { name: 'apple', age: "13", readyToEat: true },
-  { name: 'pear', age: 15, readyToEat: true },
-  { name: 'grapes', age: 1, readyToEat: false },
-  { name: 'kiwi', age: 2, readyToEat: true },
-  { name: 'dragon fruit', age: 88, readyToEat: false },
-];
+// const fruits = [
+//   { name: 'apple', age: "13", readyToEat: true },
+//   { name: 'pear', age: 15, readyToEat: true },
+//   { name: 'grapes', age: 1, readyToEat: false },
+//   { name: 'kiwi', age: 2, readyToEat: true },
+//   { name: 'dragon fruit', age: 88, readyToEat: false },
+// ];
 
-module.exports = fruits;
+// module.exports = fruits;
+
+//Example/structure of games database with names, age rating (E for everyone, T for teen, M for mature) and description of game.
 
 const games = [
   { name: 'The Legend of Zelda: Breath of the Wild', agerating: "E", price: 30, description:"The Legend of Zelda: Breath of the Wild eschewed the semi-linear, borderline predictable path of the 3D Zelda games before it in favor of a bold, crazy new approach: let players do what they want, how they want, and in whatever order they decide. By marrying an open-ended approach to quest structure with the ability to freely explore a vast, beautiful, intriguing world with little specific regulation, the 3D Zelda game template was shattered about as fast as the average breakable weapon in Breath of the Wild. The result is a gorgeous, freeing open-world action/adventure experience that evokes the wonder and fear of exploring a bold new place with the empowering tangibility of becoming its hero. "  },
