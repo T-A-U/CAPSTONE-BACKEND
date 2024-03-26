@@ -2,45 +2,57 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
-import Fruits from './models/fruitsSchema.mjs';
+//import gamesRoutes from "./routes/api/games.js"
+import Game from './models/games.mjs';
+// import Fruits from 
+// TODO: Change all "Fruits" to "Game" in this file (and comment out the old server.mjs, and make a copy, put above the comment and, then edit the copy)
 import fruits from './utilities/data.js';
+import games from './utilities/data.js';
 
 //Configurations
 dotenv.config();
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 await mongoose.connect(process.env.MONGO_URI);
 
 //Middleware
 app.use(express.json());
 
 //Routes
-//Seed Routes
-app.get('/seed', async (req, res) => {
-  await Fruits.deleteMany({});
-  await Fruits.create(fruits);
+// //Seed Routes
+// app.get('/seed', async (req, res) => {
+//   await Fruits.deleteMany({});
+//   await Fruits.create(fruits);
 
-  res.send(`Database Seeded`);
+//   res.send(`Database Seeded`);
+// });
+
+//Create Games Database 
+app.get('/get', async (req, res) => {
+  await Game.deleteMany({});
+  await Game.create(games);
+
+  res.send(`Games Database Created`);
 });
 
-//Create
-app.post('/', async (req, res) => {
+//Read all Games from Database
+app.get('/', async (req, res) => {
   try {
-    let newFruit = new Fruits(req.body);
-    await newFruit.save();
-
-    res.json(newFruit);
+    const allGames = await Game.find({});
+    res.json(allGames);
   } catch (err) {
     console.error(err);
     res.status(500).json({ msg: 'Server Error' });
   }
 });
 
-//Read
-app.get('/', async (req, res) => {
+//Create new game
+app.post('/', async (req, res) => {
   try {
-    const allFruits = await Fruits.find({});
-    res.json(allFruits);
+    let createGame = new Game(req.body);
+    await createGame.save();
+
+    res.json(createGame);
   } catch (err) {
     console.error(err);
     res.status(500).json({ msg: 'Server Error' });
@@ -50,34 +62,85 @@ app.get('/', async (req, res) => {
 //Update
 app.put('/:id', async (req, res) => {
   try {
-    const updatedFruit = await Fruits.findByIdAndUpdate(
+    const updatedGame = await Game.findByIdAndUpdate(
       req.params.id,
       req.body,
       { new: true }
     );
 
-    res.json(updatedFruit);
+    res.json(updatedGame);
   } catch (err) {
     console.error(err);
     res.status(500).json({ msg: 'Server Error' });
   }
 });
 
-//Delete
+//Delete Game
 app.delete('/:id', async (req, res) => {
   try {
-    await Fruits.findByIdAndDelete(req.params.id);
+    await Game.findByIdAndDelete(req.params.id);
 
-    res.status(200).json({ msg: 'Item Deleted' });
+    res.status(200).json({ msg: 'Game Deleted' });
   } catch (err) {
     console.error(err);
     res.status(500).json({ msg: 'Server Error' });
   }
 });
+// //Create
+// app.post('/', async (req, res) => {
+//   try {
+//     let newFruit = new Fruits(req.body);
+//     await newFruit.save();
+
+//     res.json(newFruit);
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).json({ msg: 'Server Error' });
+//   }
+// });
+
+// //Read
+// app.get('/', async (req, res) => {
+//   try {
+//     const allFruits = await Fruits.find({});
+//     res.json(allFruits);
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).json({ msg: 'Server Error' });
+//   }
+// });
+
+// //Update
+// app.put('/:id', async (req, res) => {
+//   try {
+//     const updatedFruit = await Fruits.findByIdAndUpdate(
+//       req.params.id,
+//       req.body,
+//       { new: true }
+//     );
+
+//     res.json(updatedFruit);
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).json({ msg: 'Server Error' });
+//   }
+// });
+
+// //Delete
+// app.delete('/:id', async (req, res) => {
+//   try {
+//     await Fruits.findByIdAndDelete(req.params.id);
+
+//     res.status(200).json({ msg: 'Item Deleted' });
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).json({ msg: 'Server Error' });
+//   }
+// });
 
 //Error checking middleware
 app.use((err, _req, res, next) => {
-  res.status(500).send('Seems like we messed up somewhere...');
+  res.status(500).send('There seems to be an error somewhere...');
 });
 
 //Listen
@@ -85,6 +148,95 @@ app.listen(PORT, () => {
   console.log(`Server is listening on port: ${PORT}`);
 });
 
+
+// // Imports
+// import express from 'express';
+// import dotenv from 'dotenv';
+// import mongoose from 'mongoose';
+// //import gamesRoutes from "./routes/api/games.js"
+// import Game from './models/games.mjs';
+// //TODO: Change all "Fruits" to "Game" in this file (and comment out the old server.mjs, and make a copy, put above the comment and, then edit the copy)
+// import fruits from './utilities/data.js';
+
+// //Configurations
+// dotenv.config();
+// const app = express();
+// const PORT = process.env.PORT || 3001;
+// await mongoose.connect(process.env.MONGO_URI);
+
+// //Middleware
+// app.use(express.json());
+
+// //Routes
+// //Seed Routes
+// app.get('/seed', async (req, res) => {
+//   await Fruits.deleteMany({});
+//   await Fruits.create(fruits);
+
+//   res.send(`Database Seeded`);
+// });
+
+// //Create
+// app.post('/', async (req, res) => {
+//   try {
+//     let newFruit = new Fruits(req.body);
+//     await newFruit.save();
+
+//     res.json(newFruit);
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).json({ msg: 'Server Error' });
+//   }
+// });
+
+// //Read
+// app.get('/', async (req, res) => {
+//   try {
+//     const allFruits = await Fruits.find({});
+//     res.json(allFruits);
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).json({ msg: 'Server Error' });
+//   }
+// });
+
+// //Update
+// app.put('/:id', async (req, res) => {
+//   try {
+//     const updatedFruit = await Fruits.findByIdAndUpdate(
+//       req.params.id,
+//       req.body,
+//       { new: true }
+//     );
+
+//     res.json(updatedFruit);
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).json({ msg: 'Server Error' });
+//   }
+// });
+
+// //Delete
+// app.delete('/:id', async (req, res) => {
+//   try {
+//     await Fruits.findByIdAndDelete(req.params.id);
+
+//     res.status(200).json({ msg: 'Item Deleted' });
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).json({ msg: 'Server Error' });
+//   }
+// });
+
+// //Error checking middleware
+// app.use((err, _req, res, next) => {
+//   res.status(500).send('Seems like we messed up somewhere...');
+// });
+
+// //Listen
+// app.listen(PORT, () => {
+//   console.log(`Server is listening on port: ${PORT}`);
+// });
 
 
 // // ROUTES to edit in
