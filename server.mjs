@@ -51,6 +51,20 @@ app.get('/', async (req, res) => {
     res.status(500).json({ msg: 'Server Error' });
   }
 });
+
+//Get By ID
+app.get('/:id', async (req, res) => {
+  try {
+    const getSingleGame = await Game.findById(
+      req.params._id,
+    );
+
+    res.json(getSingleGame);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ msg: 'Server Error' });
+  }
+});
 // app.post('/login', function (req,res){
 //   var post = req.body
   
