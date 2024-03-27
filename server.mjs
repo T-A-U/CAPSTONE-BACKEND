@@ -60,9 +60,18 @@ app.get('/', async (req, res) => {
 //Create new game
 app.post('/', async (req, res) => {
   try {
-    let createGame = new Game(req.body);
+    console.log('Name', req.body.name)
+    console.log(req.body.agerating)
+    console.log(req.body.price)
+    console.log(req.body.description)
+    const createGame = new Game({
+      name: req.body.name,
+      agerating: req.body.agerating,
+      price: req.body.price,
+      description: req.body.description,
+      }
+      );
     await createGame.save();
-
     res.json(createGame);
   } catch (err) {
     console.error(err);
