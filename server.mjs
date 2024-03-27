@@ -2,11 +2,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
-//import gamesRoutes from "./routes/api/games.js"
 import Game from './models/games.mjs';
-// import Fruits from 
-// TODO: Change all "Fruits" to "Game" in this file (and comment out the old server.mjs, and make a copy, put above the comment and, then edit the copy)
-//import fruits from './utilities/data.js';
 import games from './utilities/data.js';
 import cors from "cors"
 import userRoutes from './routes/api/users.js'
